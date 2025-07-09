@@ -2,7 +2,7 @@
 
 # Add Docker's official GPG key:
 sudo apt-get update
-sudo apt-get install ca-certificates curl git
+sudo apt-get install -y ca-certificates curl git
 sudo install -m 0755 -d /etc/apt/keyrings
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
 sudo chmod a+r /etc/apt/keyrings/docker.asc
@@ -15,11 +15,12 @@ echo \
 sudo apt-get update
 
 # Install Docker
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-cd /opt
+cd ~ 
 git clone https://github.com/Scherpinski-R/minecraft-cloud
 cd minecraft-cloud
 
+sudo usermod -aG docker $USER
 docker compose up -d
 
