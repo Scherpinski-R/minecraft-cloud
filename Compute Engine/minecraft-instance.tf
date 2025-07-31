@@ -1,25 +1,32 @@
+locals {
+  instance_name = "instance-minecraft-${formatdate("YYYY-MM-DD", timestamp())}"
+  disk_name = "disk-minecraft-${formatdate("YYYY-MM-DD", timestamp())}"
+}
+
 provider "google" {
   project = "minecraft-host-465119" 
   region  = "southamerica-east1"
   zone = "southamerica-east1-b"
 }
 
-resource "google_compute_disk" "disk-minecraft" {
-  name  = "disk-minecraft"
+resource "google_compute_disk" "default" {
+  name  = local.disk_name
   type  = "pd-standard"
   size  = 10
 }
 
-resource "google_compute_instance" "instance-20250708-215043" {
+resource "google_compute_instance" "default" {
+  name = local.instance_name 
+
   attached_disk {
-    source      = google_compute_disk.disk-minecraft.self_link 
-    device_name = "disk-minecraft"
+    source      = google_compute_disk.default.self_link 
+    device_name = local.disk_name 
     mode        = "READ_WRITE"
   }
 
   boot_disk {
     auto_delete = true
-    device_name = "instance-20250708-215043"
+    device_name = local.instance_name 
 
     initialize_params {
       image = "projects/ubuntu-os-cloud/global/images/ubuntu-minimal-2504-plucky-amd64-v20250708"
@@ -44,8 +51,6 @@ resource "google_compute_instance" "instance-20250708-215043" {
     startup-script = file("${path.module}/startup_script.sh") 
   }
 
-  name = "instance-20250708-215043"
-
   network_interface {
     access_config {
       network_tier = "PREMIUM"
@@ -55,6 +60,9 @@ resource "google_compute_instance" "instance-20250708-215043" {
     stack_type  = "IPV4_ONLY"
     subnetwork  = "projects/minecraft-host-465119/regions/southamerica-east1/subnetworks/default"
   }
+
+  tags = ["minecraft-server"] 
+  
 
   scheduling {
     automatic_restart   = true
