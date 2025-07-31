@@ -16,11 +16,3 @@ sudo apt-get update
 
 # Install Docker
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-cd ~ 
-git clone https://github.com/Scherpinski-R/minecraft-cloud
-cd minecraft-cloud
-
-sudo usermod -aG docker $USER
-docker compose up -d
-
