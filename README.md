@@ -3,7 +3,7 @@ Project to create and mantain a Minecraft server on Google Cloud (GCP)
 
 # How to run
 
-## Clone the repository
+## Clone the repository on gcp console
 ```
 git clone https://github.com/Scherpinski-R/minecraft-cloud.git
 ```
@@ -22,7 +22,17 @@ terraform apply mc-plan
 ## SSH on new Instance
 - get ip from https://console.cloud.google.com/compute/instances
 - ssh from gcp console
-  
+
+## Add yourself to the docker group, logout and ssh again
+```
+sudo usermod -aG docker $USER
+```
+
+## Clone the repository
+```
+git clone https://github.com/Scherpinski-R/minecraft-cloud.git
+```
+
 ## Setup Credentials
 - change .env file to match your mod provider credentials
 
